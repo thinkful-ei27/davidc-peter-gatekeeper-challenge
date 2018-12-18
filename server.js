@@ -19,40 +19,40 @@ const app = express();
 // here: https://crackstation.net/hashing-security.htm
 const USERS = [
   {id: 1,
-   firstName: 'Joe',
-   lastName: 'Schmoe',
-   userName: 'joeschmoe@business.com',
-   position: 'Sr. Engineer',
-   isAdmin: true,
-   // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
-   password: 'password'
+    firstName: 'Joe',
+    lastName: 'Schmoe',
+    userName: 'joeschmoe@business.com',
+    position: 'Sr. Engineer',
+    isAdmin: true,
+    // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
+    password: 'password'
   },
   {id: 2,
-   firstName: 'Sally',
-   lastName: 'Student',
-   userName: 'sallystudent@business.com',
-   position: 'Jr. Engineer',
-   isAdmin: true,
-   // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
-   password: 'password'
+    firstName: 'Sally',
+    lastName: 'Student',
+    userName: 'sallystudent@business.com',
+    position: 'Jr. Engineer',
+    isAdmin: true,
+    // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
+    password: 'password'
   },
   {id: 3,
-   firstName: 'Lila',
-   lastName: 'LeMonde',
-   userName: 'lila@business.com',
-   position: 'Growth Hacker',
-   isAdmin: false,
-   // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
-   password: 'password'
+    firstName: 'Lila',
+    lastName: 'LeMonde',
+    userName: 'lila@business.com',
+    position: 'Growth Hacker',
+    isAdmin: false,
+    // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
+    password: 'password'
   },
   {id: 4,
-   firstName: 'Freddy',
-   lastName: 'Fun',
-   userName: 'freddy@business.com',
-   position: 'Community Manager',
-   isAdmin: false,
-   // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
-   password: 'password'
+    firstName: 'Freddy',
+    lastName: 'Fun',
+    userName: 'freddy@business.com',
+    position: 'Community Manager',
+    isAdmin: false,
+    // NEVER EVER EVER store passwords in plain text in real life. NEVER!!!!!!!!!!!
+    password: 'password'
   }
 ];
 
@@ -65,15 +65,18 @@ const USERS = [
 //     (aka, `req.user = matchedUser`)
 function gateKeeper(req, res, next) {
   // your code should replace the line below
+  const { user, pass } = Object.assign({user: null, pass: null}, queryString.parse(req.get('x-username-and-password')));
+  console.log(user, pass);
+  req.user = USERS.find(usr => usr.userName === user && usr.password === pass);
   next();
 }
 
 // Add the middleware to your app!
-
+app.use(gateKeeper);
 // this endpoint returns a json object representing the user making the request,
 // IF they supply valid user credentials. This endpoint assumes that `gateKeeper` 
 // adds the user object to the request if valid credentials were supplied.
-app.get("/api/users/me", (req, res) => {
+app.get('/api/users/me', (req, res, next) => {
   // send an error message if no or wrong credentials sent
   if (req.user === undefined) {
     return res.status(403).json({message: 'Must supply valid user credentials'});
@@ -85,6 +88,6 @@ app.get("/api/users/me", (req, res) => {
   return res.json({firstName, lastName, id, userName, position});
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${process.env.PORT}`);
+app.listen(8080, () => {
+  console.log(`Your app is listening on port 8080`);
 });
