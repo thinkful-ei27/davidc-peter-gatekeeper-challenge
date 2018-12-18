@@ -1,0 +1,25 @@
+{
+  "name": "davidc-peter-gatekeeper-challenge",
+  "version": "1.0.0",
+  "description": "GateKeeper Middleware Challenge",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thinkful-ei27/davidc-peter-gatekeeper-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thinkful-ei27/davidc-peter-gatekeeper-challenge/issues"
+  },
+  "homepage": "https://github.com/thinkful-ei27/davidc-peter-gatekeeper-challenge#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "query-string": "^6.2.0"
+  }
+}
